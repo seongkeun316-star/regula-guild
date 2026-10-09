@@ -1,0 +1,19 @@
+build/
+.gradle/
+local.properties
+*.keystore
+*.jks
+app/build/
+
+# Generated installers and local backups
+*.apk
+*.aab
+*.apks
+*.zip
+*.bundle
+# Local tooling and credentials
+.env
+.env.*
+!.env.example
+node_modules/
+.DS_Store

@@ -1,0 +1,26 @@
+const {chromium}=require('playwright');const assert=require('assert'),path=require('path'),fs=require('fs');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'/tmp/regulaguild-browser/chrome-headless-shell-linux64/chrome-headless-shell',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+ const page=await browser.newPage({viewport:{width:393,height:852},deviceScaleFactor:2,isMobile:true,hasTouch:true});let errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('file://'+path.resolve(__dirname,'../app/src/main/assets/index.html'));
+ await page.locator('#name').fill('길드 조사관');await page.getByRole('button',{name:'길드에 입단하기'}).click();await page.getByRole('button',{name:'규격의 숲으로'}).click();
+ await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(150);await page.screenshot({path:path.resolve(__dirname,'../../preview-world.png'),fullPage:true});
+ await page.evaluate(()=>{state.pos={x:6,y:6};save()});await page.getByRole('button',{name:'대화 / 조사'}).click();await page.locator('#modal').getByRole('button',{name:/두 문서, 하나의 오해/}).click();await page.getByRole('button',{name:'의뢰 수락'}).click();
+ assert.equal(await page.evaluate(()=>state.battle.phase),'dossier');
+ await page.screenshot({path:path.resolve(__dirname,'../../preview-quest.png'),fullPage:true});
+ await page.evaluate(()=>{selectEvidence(0);selectEvidence(1);evaluateEvidence()});
+ await page.screenshot({path:path.resolve(__dirname,'../../preview-battle.png'),fullPage:true});
+ await page.evaluate(()=>{choose(0);advance();choose(0);advance();completeQuest();closeModal();go('home')});
+ await page.reload();assert.equal(await page.evaluate(()=>count()),1,'reload persists progress');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'mobile no overflow');
+ for(let i=1;i<13;i++)await page.evaluate(i=>{accept(i);selectEvidence(0);selectEvidence(1);evaluateEvidence();choose(0);advance();choose(0);advance();completeQuest();closeModal()},i);
+ assert.equal(await page.evaluate(()=>count()),13);await page.evaluate(()=>{go('hero')});await page.screenshot({path:path.resolve(__dirname,'../../preview-character.png'),fullPage:true});
+ await page.evaluate(()=>{go('bag');item('book');item('shield');learn('guard');learn('focus');go('home')});await page.screenshot({path:path.resolve(__dirname,'../../preview-home.png'),fullPage:true});
+ await page.evaluate(()=>{decideEvent(0,1);closeModal();report()});
+ assert.equal(await page.evaluate(()=>state.events[0]),1);
+ await page.evaluate(()=>closeModal());
+ await page.setViewportSize({width:320,height:640});await page.evaluate(()=>go('world'));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'small screen no overflow');
+ await page.screenshot({path:path.resolve(__dirname,'../../preview-small.png'),fullPage:true});
+ assert.deepEqual(errors,[],'no browser JS errors');console.log('PASS: Chrome mobile touch UI, Kontra loop, NPC flow, 13-quest campaign, persisted reload, 393/320px overflow checks; screenshots written.');
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
