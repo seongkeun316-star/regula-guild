@@ -81,7 +81,7 @@ export ANDROID_SDK_ROOT=/your/android-sdk
 출력: `build/RegulaGuild-0.1.1.apk`
 Android Studio에서는 프로젝트를 열고 SDK 경로를 지정해 빌드할 수 있습니다. Gradle 방식은 최초 사용 시 빌드 플러그인 다운로드가 필요합니다. 이 소스에는 Gradle wrapper는 포함하지 않습니다.
 
-개발 서명 키는 제공 APK와 동일한 `build/development.jks`입니다. 테스트 업데이트 호환용으로 공유된 개발 키이며 상용 배포용 개인 키로 사용하면 안 됩니다. 공개 저장소에 올릴 때는 이 키를 제외하고 별도 배포 서명 체계를 정하십시오. `build/` 전체를 무시하는 `.gitignore`를 포함합니다.
+기존 릴리스용 소스 ZIP의 `build/development.jks`는 제공 APK와 동일한 개발 서명 키입니다. GitHub 저장소에는 이 키를 포함하지 않습니다. 테스트 업데이트 호환용으로 공유된 개발 키이며 상용 배포용 개인 키로 사용하면 안 됩니다. 공개 저장소에 올릴 때는 이 키를 제외하고 별도 배포 서명 체계를 정하십시오. `build/` 전체를 무시하는 `.gitignore`를 포함합니다.
 
 브라우저에서도 assets 폴더에 정적 서버를 열면 플레이할 수 있습니다. Android 전용 파일선택 기능은 브라우저 다운로드/파일입력으로 대체됩니다.
 
@@ -105,4 +105,4 @@ APK 컴파일·패키징과 v2/v3 서명 검증을 완료했습니다. Chrome 13
 
 ## Git 관리
 
-현재 버전은 `main` 첫 커밋과 `v0.1.1` 태그로 관리합니다. 원격 GitHub 저장소에는 아직 업로드하지 않았습니다. 상세한 시작·업데이트·서명 키 관리 방법은 `GIT_GUIDE.md`, 변경 내용은 `CHANGELOG.md`를 참고하십시오. Git용 배포에는 서명 키와 APK를 포함하지 않습니다. 기존 릴리스용 소스 ZIP과 Git용 ZIP은 구성 목적이 다릅니다.
+소스·글꼴·라이선스·문서·테스트는 GitHub 저장소 `seongkeun316-star/regula-guild`의 `main` 브랜치에 업로드되어 있습니다. 로컬 Git 준비 ZIP의 `v0.1.1` 태그와 GitHub의 태그·Releases는 별도이므로, 원격에 버전 태그나 APK 릴리스가 게시되었다는 뜻은 아닙니다. 상세한 시작·업데이트·서명 키 관리 방법은 `GIT_GUIDE.md`, 변경 내용은 `CHANGELOG.md`를 참고하십시오. Git용 배포에는 서명 키와 APK를 포함하지 않습니다. 기존 릴리스용 소스 ZIP과 Git용 ZIP은 구성 목적이 다릅니다.
