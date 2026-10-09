@@ -1,34 +1,34 @@
 # 규제 길드 Git 관리 안내
 
-현재 소스를 `main` 브랜치의 첫 커밋에 기록하고 `v0.1.1` 태그를 붙였습니다. 이 파일에 설명된 원격 저장소 연결은 아직 실행하지 않았습니다.
+GitHub 저장소 `seongkeun316-star/regula-guild`의 `main` 브랜치에 소스와 두 글꼴 업로드를 완료했습니다. Git 준비 ZIP에는 로컬 `v0.1.1` 태그가 있지만, 원격 태그와 APK Releases는 별도로 게시해야 합니다.
 
 ## Git과 GitHub
 
-Git은 변경 이력을 기록하는 도구입니다. GitHub는 그 저장소를 온라인에 보관하고 공동 작업하는 서비스입니다. 커밋·태그는 로컬에 준비되어 있으며, 원격 저장소 주소를 결정하면 업로드할 수 있습니다.
+Git은 변경 이력을 기록하는 도구입니다. GitHub는 그 저장소를 온라인에 보관하고 공동 작업하는 서비스입니다. 현재 소스는 GitHub에도 보관되어 있습니다. 앞으로는 원격 저장소를 복제하여 최신 이력을 기준으로 수정하는 것이 좋습니다.
 
 ## PC에서 시작
 
-제공된 Git 준비 ZIP을 풀면 `RegulaGuild` 폴더 안에 Git 저장소가 들어 있습니다. 숨김 폴더인 `.git`을 함께 유지하십시오. GitHub Desktop에서 ‘Add Local Repository’로 해당 폴더를 선택하거나, 터미널에서 그 폴더로 이동합니다.
+GitHub Desktop에서 File → Clone repository를 선택하고 아래 저장소 주소로 복제합니다. 기존 Git 준비 ZIP 대신 원격 저장소를 복제하면 웹에서 추가한 글꼴과 최신 커밋을 함께 가져옵니다.
 
 ```bash
+git clone https://github.com/seongkeun316-star/regula-guild.git
+cd regula-guild
 git status
 git log --oneline
-git tag
 ```
+
+저장소가 비공개이므로 접근 권한이 있는 GitHub 계정으로 인증해야 합니다. ChatGPT의 GitHub 연결과 PC의 Git 인증은 별개입니다.
 
 ## GitHub 원격 연결
 
-GitHub에서 빈 저장소를 생성합니다. 예시 이름은 `regula-guild`이며 초기 검토 단계의 접근 범위는 비공개로 둘 수 있습니다. 이 소스에 README와 LICENSE가 이미 있으므로 GitHub 저장소 생성 시 별도 초기 파일을 추가하지 않으면 초기 연결이 간단합니다.
-
-생성된 실제 저장소의 HTTPS 주소로 아래 예시 주소를 교체합니다. 이 명령은 사용자가 저장소를 만든 뒤 실행하는 안내이며 원격 업로드가 완료된 상태를 뜻하지 않습니다.
+위 방식으로 복제하면 `origin`이 자동 설정됩니다. 기존 복제본에서는 작업 상태를 확인한 뒤 최신 변경을 가져옵니다.
 
 ```bash
-git remote add origin https://github.com/OWNER/regula-guild.git
-git push -u origin main
-git push origin v0.1.1
+git status
+git pull --ff-only origin main
 ```
 
-기존 원격에 코드가 있다면 먼저 내용을 확인하고 병합해야 합니다. `--force`로 덮어쓰지 마십시오.
+로컬 변경이나 이력이 충돌하면 내용을 확인하고 해결해야 합니다. `--force`로 덮어쓰지 마십시오. 원격에 올라간 소스를 기준으로 버전 태그를 확정하고 APK Releases는 별도로 게시합니다.
 
 ## 이후 개선 작업
 
