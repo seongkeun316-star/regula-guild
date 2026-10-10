@@ -76,6 +76,10 @@ public class MainActivity extends Activity {
         setContentView(root);
         root.requestApplyInsets();
         if (saved != null) pendingExport = saved.getByteArray("export");
+        if (Build.VERSION.SDK_INT >= 33) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, () -> handleGameBack());
+        }
         web.loadUrl("file:///android_asset/index.html");
     }
     public class Bridge {
@@ -128,8 +132,11 @@ public class MainActivity extends Activity {
         } catch(Exception e) { pendingExport=null; Toast.makeText(this,"파일을 처리하지 못했습니다.",Toast.LENGTH_LONG).show(); }
     }
     @Override public void onBackPressed() {
+        handleGameBack();
+    }
+    private void handleGameBack() {
         web.evaluateJavascript("window.onNativeBack ? window.onNativeBack() : false", value -> {
-            if (!"true".equals(value)) MainActivity.super.onBackPressed();
+            if (!"true".equals(value)) finish();
         });
     }
     @Override protected void onPause() { super.onPause(); if(web!=null) web.onPause(); }
