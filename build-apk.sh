@@ -15,6 +15,6 @@ jar cf build/classes.jar -C build/classes .
 if [ ! -f build/development.jks ]; then
  keytool -genkeypair -keystore build/development.jks -alias regula -storepass android -keypass android -dname 'CN=Regula Guild Development' -keyalg RSA -keysize 2048 -validity 10000
 fi
-"$BT/apksigner" sign --ks build/development.jks --ks-key-alias regula --ks-pass pass:android --key-pass pass:android --out build/Standaria-0.1.3.apk build/aligned.apk
-"$BT/apksigner" verify --verbose build/Standaria-0.1.3.apk
+"$BT/apksigner" sign --ks build/development.jks --ks-key-alias regula --ks-pass pass:android --key-pass pass:android --out build/Standaria-0.1.4.apk build/aligned.apk
+"$BT/apksigner" verify --verbose build/Standaria-0.1.4.apk
 
